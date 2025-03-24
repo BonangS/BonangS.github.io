@@ -12,6 +12,7 @@ self.addEventListener('install', function(event) {
                     '/src/js/app.js',
                     '/fetch.js',
                     '/manifest.json',
+                    'https://jsonplaceholder.typicode.com/posts'
                 ]);
             })
             .catch(err => console.log("Cache failed", err))
