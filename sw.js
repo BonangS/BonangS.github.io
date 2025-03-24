@@ -7,7 +7,8 @@ self.addEventListener('install', function(event) {
             '/index.html',
             '/src/css/app.css',
             '/src/js/app.js',
-            '/manifest.json'
+            '/manifest.json',
+            'https://jsonplaceholder.typicode.com/posts'
           ])
         })
     );
@@ -19,6 +20,22 @@ self.addEventListener('install', function(event) {
       caches.match(event.request)
         .then(function(res) {
           return res;
+        })
+    );
+  });
+
+  self.addEventListener('fetch', function(event) {
+    event.respondWith(
+      fetch(event.request)
+        .then(function(res) {
+          return caches.open(CACHE_DYNAMIC_NAME)
+                  .then(function(cache) {
+                    cache.put(event.request.url, res.clone());
+                    return res;
+                  })
+        })
+        .catch(function(err) {
+          return caches.match(event.request);
         })
     );
   });
