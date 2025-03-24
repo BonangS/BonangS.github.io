@@ -10,6 +10,7 @@ self.addEventListener('install', function(event) {
                     '/index.html',
                     '/src/css/app.css',
                     '/src/js/app.js',
+                    '/fetch.js',
                     '/manifest.json',
                 ]);
             })
@@ -40,8 +41,8 @@ self.addEventListener('fetch', function(event) {
             .then(function(res) {
                 return caches.open(CACHE_DYNAMIC_NAME)
                     .then(function(cache) {
-                        cache.put(event.request, res.clone()); 
-                        return res; 
+                        cache.put(event.request, res.clone());
+                        return res;
                     });
             })
             .catch(function() {
