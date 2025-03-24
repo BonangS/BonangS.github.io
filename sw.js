@@ -1,6 +1,9 @@
+var CACHE_STATIC_NAME = 'static-v10';
+var CACHE_DYNAMIC_NAME = 'dynamic-v2';
+
 self.addEventListener('install', function(event) {
     event.waitUntil(
-      caches.open('first-app')
+      caches.open(CACHE_STATIC_NAME)
         .then(function(cache) {
           cache.addAll([
             '/',
@@ -8,21 +11,12 @@ self.addEventListener('install', function(event) {
             '/src/css/app.css',
             '/src/js/app.js',
             '/manifest.json',
-            'https://jsonplaceholder.typicode.com/posts'
           ])
         })
     );
     return self.clients.claim();
   });
 
-  self.addEventListener('fetch', function(event) {
-    event.respondWith(
-      caches.match(event.request)
-        .then(function(res) {
-          return res;
-        })
-    );
-  });
 
   self.addEventListener('fetch', function(event) {
     event.respondWith(
@@ -39,6 +33,8 @@ self.addEventListener('install', function(event) {
         })
     );
   });
+
+
 
   
   
